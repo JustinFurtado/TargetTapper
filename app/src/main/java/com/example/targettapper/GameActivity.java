@@ -125,18 +125,19 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
     private void generateNewQuad(Square quad, float w){
         // random x on + or - far half of screen
         float x = ((rand.nextFloat() * 2.0f * w - 1.0f) * 0.25f + 0.75f) * (rand.nextBoolean() ? 1.0f : -1.0f);
-        System.out.println(x);
+
         // start barely off/onscreen
         float y = -0.95f;
 
         // scale between 0.1f-0.5f
         float s = rand.nextFloat() * 0.3f + 0.2f;
 
-        // x velocity towards center of screen
-        float vx = (x > 0.0f ? -1.0f : 1.0f) * (rand.nextFloat() * 0.66f + 0.33f);
+        float vy = rand.nextFloat() * 0.4f + 0.4f;
 
-        float vy = rand.nextFloat() * 0.66f + 0.33f;
-        float g = -0.125f;
+        // x velocity towards center of screen
+        float vx = (x > 0.0f ? -1.0f : 1.0f) * (rand.nextFloat() * 0.5f + 0.25f) * (0.5f * vy);
+
+        float g = -0.15f;
 
         quad.setPos(x, y, 0.0f);
         quad.setVelocity(vx, vy);

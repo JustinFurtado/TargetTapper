@@ -19,6 +19,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private int vertBufID;
     private float widthP;
     private MyGLGame currentGame;
+    private int positionAttribLoc;
+    private int uvAttribLoc;
+    private int texUniformLoc;
+    private int posUniformLoc;
+    private int scaleUniformLoc;
+    private int aspectLoc;
+    private int leftLoc;
+    private int rightLoc;
 
     private final String vertexShaderCode =
                     "attribute vec3 vPosition;\n" +
@@ -58,6 +66,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         mProgram.linkShaderProgram();
         mProgram.useProgram();
 
+        positionAttribLoc = GLES20.glGetAttribLocation(mProgram.getProgramID(), "vPosition");
+        uvAttribLoc = GLES20.glGetAttribLocation(mProgram.getProgramID(), "UV");
+        texUniformLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "textureSampler");
+        posUniformLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "offset");
+        scaleUniformLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "scale");
+        aspectLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "aspect");
+        leftLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "leftCompare");
+        rightLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "rightCompare");
+
         int[] one = new int[1];
         GLES20.glGenBuffers(1, one, 0);
         vertBufID = one[0];
@@ -93,22 +110,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         mProgram.useProgram();
         widthP = height * 1.0f / width;
-        GLES20.glUniform1f(GLES20.glGetUniformLocation(mProgram.getProgramID(), "aspect"), widthP);
-        GLES20.glUniform1f(GLES20.glGetUniformLocation(mProgram.getProgramID(), "leftCompare"), (width - height) / 2.0f);
-        GLES20.glUniform1f(GLES20.glGetUniformLocation(mProgram.getProgramID(), "rightCompare"), (width + height) / 2.0f);
+        GLES20.glUniform1f(aspectLoc, widthP);
+        GLES20.glUniform1f(leftLoc, (width - height) / 2.0f);
+        GLES20.glUniform1f(rightLoc, (width + height) / 2.0f);
 
     }
 
     public void drawObjectWithShader(Square quad){
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertBufID);
         mProgram.useProgram();
-
-        // get handle to vertex shader's vPosition member
-        int positionAttribLoc = GLES20.glGetAttribLocation(mProgram.getProgramID(), "vPosition");
-        int uvAttribLoc = GLES20.glGetAttribLocation(mProgram.getProgramID(), "UV");
-        int texUniformLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "textureSampler");
-        int posUniformLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "offset");
-        int scaleUniformLoc = GLES20.glGetUniformLocation(mProgram.getProgramID(), "scale");
 
         // Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(positionAttribLoc);

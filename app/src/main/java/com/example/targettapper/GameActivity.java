@@ -139,11 +139,14 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
 
         float g = -0.15f;
 
-        quad.setPos(x, y, 0.0f);
+        boolean hazard = rand.nextFloat() < 0.2f;
+        quad.setPos(x, y, rand.nextFloat() * 0.5f - 0.5f);
         quad.setVelocity(vx, vy);
         quad.setScale(s);
         quad.setGravity(g);
-        quad.setTexID(rand.nextFloat() < 0.2f ? hazardImageId : targetImageId);
+        quad.setTexID(hazard ? hazardImageId : targetImageId);
+
+
     }
 
     public void draw(MyGLRenderer renderer){
@@ -160,15 +163,28 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
     }
 
     public void onTouch(float ndcX, float ndcY, float widthP){
-        if (isGameOver) {return;}
+        if (isGameOver || mSquares == null) {return;}
         wp = widthP;
-        for (Square quad : mSquares){
+        int hitIndex = -1;
+        for (int i = 0; i < mSquares.size(); ++i){
+            Square quad = mSquares.get(i);
             if (!quad.isEnabled()) { continue; }
+
+            float thisZ = quad.getXYZ()[2];
             if (quad.containsPoint(ndcX, ndcY, widthP)) {
-                if (quad.getTexID() == hazardImageId) {life = -1; setLifeText();} // lose one life per hazard tap
-                else if (quad.getTexID() == targetImageId) {score += (int)(5.0f / quad.getScale()); setScoreText(); } // get more score for smaller targets
-                generateNewQuad(quad);
+                hitIndex = i;
             }
         }
+
+        if (hitIndex > -1 && hitIndex < mSquares.size()){
+            handleTap(mSquares.get(hitIndex));
+        }
+
+    }
+
+    private void handleTap(Square quad){
+        if (quad.getTexID() == hazardImageId) {life = -1; setLifeText();} // lose one life per hazard tap
+        else if (quad.getTexID() == targetImageId) {score += (int)(5.0f / quad.getScale()); setScoreText(); } // get more score for smaller targets
+        generateNewQuad(quad);
     }
 }

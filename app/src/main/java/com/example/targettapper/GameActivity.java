@@ -28,6 +28,9 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
     private boolean isGameOver = false;
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +142,7 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
         // scale between 0.1f-0.5f
         float s = rand.nextFloat() * 0.3f + 0.2f;
 
-        float vy = rand.nextFloat() * 0.4f + 0.4f + (0.15f * (score/100));
+        float vy = rand.nextFloat() * 0.4f + 0.4f + (0.2f * (score/100));
 
         // x velocity towards center of screen
         float vx = (x > 0.0f ? -1.0f : 1.0f) * (rand.nextFloat() * 0.5f + 0.25f) * (0.5f * vy);
@@ -191,8 +194,18 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
 
     private void handleTap(Square quad){
         if (quad.getTexID() == hazardImageId) {life = -1; setLifeText();} // lose one life per hazard tap
-        else if (quad.getTexID() == targetImageId) {score += (int)(5.0f / quad.getScale()); setScoreText(); MediaPlayer mp = MediaPlayer.create(this, R.raw.soundscratehandgunshot);
-            mp.start(); } // get more score for smaller targets
+        else if (quad.getTexID() == targetImageId) {
+            score += (int)(5.0f / quad.getScale());
+            setScoreText();
+            MediaPlayer mp = MediaPlayer.create(this, R.raw.soundscratehandgunshot);
+            mp.start();
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();
+                }
+            });
+        } // get more score for smaller targets
+
         generateNewQuad(quad);
     }
 }

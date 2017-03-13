@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MyGLGame {
     }
 
     public void initialize(){
-        int bgImageId = BitmapLoader.loadBitmap(getResources(), R.drawable.titlebackground);
+        int bgImageId = BitmapLoader.loadBitmap(getResources(), R.drawable.titlealt);
 
         background  = new Square();
         background.setScale(2.0f);

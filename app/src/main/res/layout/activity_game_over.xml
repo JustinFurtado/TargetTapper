@@ -10,13 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.targettapper.GameOverActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FF0000"
-        android:text="Score: 0"
-        android:id="@+id/score"/>
-
     <Button
         android:id="@+id/startGame"
         android:layout_width="wrap_content"
@@ -44,5 +37,17 @@
         android:id="@+id/title"
         android:layout_above="@+id/list"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:text="Score: 0"
+        android:id="@+id/score"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/list"
+        android:layout_alignStart="@+id/list"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp" />
 
 </RelativeLayout>

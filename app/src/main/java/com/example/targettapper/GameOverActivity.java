@@ -2,6 +2,7 @@ package com.example.targettapper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class GameOverActivity extends AppCompatActivity implements MyGLGame {
 
         int score = getIntent().getIntExtra(GameActivity.EXTRA_INT, 0);
         scoreText = (TextView)findViewById(R.id.score);
+        scoreText.setTextColor(Color.WHITE);
+        scoreText.setTextSize(26);
         scoreText.setText("Your Score was: " + score);
         scoreText.bringToFront();
 

@@ -1,6 +1,8 @@
 package com.example.targettapper;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
     private float wp;
     private boolean isGameOver = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +41,13 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
 
         layout.addView(mGLView);
 
+
         scoreText = (TextView)findViewById(R.id.score);
         lifeText = (TextView)findViewById(R.id.life);
-
+        scoreText.setTextColor(Color.WHITE);
+        lifeText.setTextColor(Color.WHITE);
+        scoreText.setTextSize(26);
+        lifeText.setTextSize(26);
         scoreText.bringToFront();
         lifeText.bringToFront();
 
@@ -106,7 +113,7 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
             }
         }
 
-        if (life < 0){
+        if (life < 1){
             isGameOver = true;
             goToGameOver();
         }
@@ -132,12 +139,12 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
         // scale between 0.1f-0.5f
         float s = rand.nextFloat() * 0.3f + 0.2f;
 
-        float vy = rand.nextFloat() * 0.4f + 0.4f + (0.02f * (score/10));
+        float vy = rand.nextFloat() * 0.4f + 0.4f + (0.15f * (score/100));
 
         // x velocity towards center of screen
         float vx = (x > 0.0f ? -1.0f : 1.0f) * (rand.nextFloat() * 0.5f + 0.25f) * (0.5f * vy);
 
-        float g = -0.15f - (0.01f * (score/10));
+        float g = -0.15f - (0.15f * (score/100));
 
         boolean hazard = rand.nextFloat() < 0.2f;
         quad.setPos(x, y, rand.nextFloat() * 0.5f - 0.5f);
@@ -184,7 +191,8 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
 
     private void handleTap(Square quad){
         if (quad.getTexID() == hazardImageId) {life = -1; setLifeText();} // lose one life per hazard tap
-        else if (quad.getTexID() == targetImageId) {score += (int)(5.0f / quad.getScale()); setScoreText(); } // get more score for smaller targets
+        else if (quad.getTexID() == targetImageId) {score += (int)(5.0f / quad.getScale()); setScoreText(); MediaPlayer mp = MediaPlayer.create(this, R.raw.soundscratehandgunshot);
+            mp.start(); } // get more score for smaller targets
         generateNewQuad(quad);
     }
 }

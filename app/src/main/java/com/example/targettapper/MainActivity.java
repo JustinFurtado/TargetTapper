@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MyGLGame {
 
         layout.addView(mGLView);
 
-        ((TextView)findViewById(R.id.helloWorld)).bringToFront();
+//        ((TextView)findViewById(R.id.helloWorld)).bringToFront();
     }
 
     public void initialize(){

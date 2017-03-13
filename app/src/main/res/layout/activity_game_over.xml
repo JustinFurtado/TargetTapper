@@ -21,8 +21,28 @@
         android:id="@+id/startGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:text="Return to Title"
-        android:onClick="goToTitle"/>
+        android:onClick="goToTitle"
+        android:layout_marginBottom="36dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="25dp"
+        android:text="@string/scoreDesc"
+        android:id="@+id/title"
+        android:layout_above="@+id/list"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

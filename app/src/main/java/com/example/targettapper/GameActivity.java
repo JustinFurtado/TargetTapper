@@ -132,12 +132,12 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
         // scale between 0.1f-0.5f
         float s = rand.nextFloat() * 0.3f + 0.2f;
 
-        float vy = rand.nextFloat() * 0.4f + 0.4f;
+        float vy = rand.nextFloat() * 0.4f + 0.4f + (0.02f * (score/10));
 
         // x velocity towards center of screen
         float vx = (x > 0.0f ? -1.0f : 1.0f) * (rand.nextFloat() * 0.5f + 0.25f) * (0.5f * vy);
 
-        float g = -0.15f;
+        float g = -0.15f - (0.01f * (score/10));
 
         boolean hazard = rand.nextFloat() < 0.2f;
         quad.setPos(x, y, rand.nextFloat() * 0.5f - 0.5f);

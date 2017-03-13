@@ -10,17 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.targettapper.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FF0000"
-        android:text="Hello World!"
-        android:id="@+id/helloWorld"/>
     <Button
         android:id="@+id/startGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:text="Start Game"
-        android:onClick="goToGame"/>
+        android:onClick="goToGame"
+        android:layout_marginBottom="72dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

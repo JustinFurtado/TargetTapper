@@ -207,6 +207,7 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
 
             mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 public void onPrepared(MediaPlayer mp){
+                    mp.setVolume(0.5f,0.5f);
                     mp.start();
                 }
             });

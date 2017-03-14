@@ -153,7 +153,7 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
         // x velocity towards center of screen
         float vx = (x > 0.0f ? -1.0f : 1.0f) * (rand.nextFloat() * 0.5f + 0.25f) * (0.5f * vy);
 
-        float g = -0.15f - (0.15f * (score/100));
+        float g = -0.15f - (0.2f * (score/100));
 
         boolean hazard = rand.nextFloat() < 0.2f;
         quad.setPos(x, y, rand.nextFloat() * 0.5f - 0.5f);

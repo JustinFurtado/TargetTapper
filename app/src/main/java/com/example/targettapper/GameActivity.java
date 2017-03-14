@@ -26,6 +26,8 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
     private Random rand;
     private float wp;
     private boolean isGameOver = false;
+    MediaPlayer music;
+
 
 
 
@@ -33,8 +35,10 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        music = MediaPlayer.create(this, R.raw.midwestprisonbreak);
         super.onCreate(savedInstanceState);
-
+        music.start();
+        music.setLooping(true);
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity.
         mGLView = new MyGLSurfaceView(this, this);
@@ -119,6 +123,8 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
         if (life < 1){
             isGameOver = true;
             goToGameOver();
+            music.stop();
+            music.release();
         }
     }
 
@@ -198,10 +204,21 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
             score += (int)(5.0f / quad.getScale());
             setScoreText();
             MediaPlayer mp = MediaPlayer.create(this, R.raw.soundscratehandgunshot);
-            mp.start();
+
+            mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                public void onPrepared(MediaPlayer mp){
+                    mp.start();
+                }
+            });
+
+
             mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 public void onCompletion(MediaPlayer mp) {
                     mp.release();
+                }
+
+                public void onPrepared(MediaPlayer mp){
+                    mp.start();
                 }
             });
         } // get more score for smaller targets

@@ -216,10 +216,6 @@ public class GameActivity extends AppCompatActivity implements MyGLGame {
                 public void onCompletion(MediaPlayer mp) {
                     mp.release();
                 }
-
-                public void onPrepared(MediaPlayer mp){
-                    mp.start();
-                }
             });
         } // get more score for smaller targets
 
